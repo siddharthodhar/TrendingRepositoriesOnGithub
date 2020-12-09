@@ -1,0 +1,82 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "ab877d687192608ae6a324a7412aa4ce",
+    "entities": [
+      {
+        "tableName": "repo_details",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`repoId` INTEGER PRIMARY KEY AUTOINCREMENT, `author` TEXT NOT NULL, `name` TEXT NOT NULL, `avatar` TEXT NOT NULL, `url` TEXT NOT NULL, `description` TEXT NOT NULL, `language` TEXT NOT NULL, `languageColor` TEXT NOT NULL, `stars` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "repoId",
+            "columnName": "repoId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "author",
+            "columnName": "author",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "avatar",
+            "columnName": "avatar",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "url",
+            "columnName": "url",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "language",
+            "columnName": "language",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "languageColor",
+            "columnName": "languageColor",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "stars",
+            "columnName": "stars",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "repoId"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ab877d687192608ae6a324a7412aa4ce')"
+    ]
+  }
+}

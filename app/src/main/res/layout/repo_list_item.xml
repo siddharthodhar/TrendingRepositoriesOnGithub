@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imageViewAvatar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:contentDescription="@string/avatar"
+        android:padding="1dp"
+        app:layout_constraintBottom_toTopOf="@id/textViewName"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toStartOf="@id/textViewAuthor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewAuthor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:textColor="@color/dark_grey"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@id/imageViewAvatar"
+        app:layout_constraintStart_toEndOf="@id/imageViewAvatar"
+        app:layout_constraintTop_toTopOf="@id/imageViewAvatar" />
+
+    <TextView
+        android:id="@+id/textViewName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/textViewDescription"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/imageViewAvatar"
+        app:layout_constraintTop_toBottomOf="@id/imageViewAvatar" />
+
+    <TextView
+        android:id="@+id/textViewDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/textViewLanguage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewName" />
+
+    <ImageView
+        android:id="@+id/imageViewLanguage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="10dp"
+        android:contentDescription="@string/language"
+        android:padding="4dp"
+        android:src="@drawable/ic_language"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toStartOf="@id/textViewLanguage"
+        app:layout_constraintStart_toStartOf="@id/textViewDescription"
+        app:layout_constraintTop_toBottomOf="@id/textViewDescription" />
+
+    <TextView
+        android:id="@+id/textViewLanguage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/light_grey"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/imageViewLanguage"
+        app:layout_constraintStart_toEndOf="@id/imageViewLanguage"
+        app:layout_constraintTop_toTopOf="@id/imageViewLanguage" />
+
+    <ImageView
+        android:id="@+id/imageViewStars"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/language"
+        android:padding="2dp"
+        android:src="@drawable/ic_stars"
+        app:layout_constraintBottom_toBottomOf="@id/textViewLanguage"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toStartOf="@id/textViewStars"
+        app:layout_constraintTop_toTopOf="@id/textViewLanguage" />
+
+    <TextView
+        android:id="@+id/textViewStars"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:textColor="@color/light_grey"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/imageViewStars"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/imageViewStars" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
