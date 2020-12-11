@@ -1,9 +1,12 @@
 package com.siddhartho.trendingrepositories.ui
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
@@ -122,6 +125,14 @@ class DisplayReposActivity : DaggerAppCompatActivity() {
             layoutManager =
                 LinearLayoutManager(this@DisplayReposActivity, LinearLayoutManager.VERTICAL, false)
             adapter = displayReposRecyclerViewAdapter
+        }
+
+        displayReposRecyclerViewAdapter.setOnItemClickListener { url, name, author ->
+            showDialogOnClick(
+                url,
+                name,
+                author
+            )
         }
     }
 
@@ -274,6 +285,27 @@ class DisplayReposActivity : DaggerAppCompatActivity() {
                 swipeRefreshRepos.visibility = View.GONE
             }
         }
+    }
+
+    private fun showDialogOnClick(url: String, name: String, author: String) {
+        Log.d(TAG, "showDialogOnClick() called with: url = $url")
+        val items = arrayOf("Open in browser", "Close")
+
+        val builder = AlertDialog.Builder(this)
+        builder.setItems(items) { dialog, i ->
+            dialog.dismiss()
+            if (i == 0) {
+                openUrlInBrowser(url)
+            }
+        }
+        builder.setTitle("$name by $author")
+        builder.setCancelable(true)
+        builder.show()
+    }
+
+    private fun openUrlInBrowser(url: String) {
+        Log.d(TAG, "openUrlInBrowser() called with: url = $url")
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
     }
 
     override fun onBackPressed() {

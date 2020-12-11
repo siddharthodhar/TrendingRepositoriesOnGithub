@@ -21,6 +21,7 @@ class DisplayReposRecyclerViewAdapter @Inject constructor() :
 
     private var mRepoDetailList = ArrayList<RepoDetail>()
     private var mRepoDetailFullList = ArrayList<RepoDetail>()
+    private var mOnItemClick: ((url: String, name: String, author: String) -> Unit)? = null
 
     @Inject
     lateinit var requestManager: RequestManager
@@ -101,6 +102,17 @@ class DisplayReposRecyclerViewAdapter @Inject constructor() :
             textViewStars.text = mRepoDetailList[position].stars
             if (position != mRepoDetailList.size - 1) {
                 imageViewDivider.setImageResource(R.drawable.divider_recycler_view_dash)
+            } else {
+                imageViewDivider.setImageDrawable(null)
+            }
+            root.setOnClickListener {
+                mOnItemClick?.let { onItemClick ->
+                    onItemClick(
+                        mRepoDetailList[holder.adapterPosition].url,
+                        mRepoDetailList[holder.adapterPosition].name,
+                        mRepoDetailList[holder.adapterPosition].author
+                    )
+                }
             }
         }
     }
@@ -114,6 +126,10 @@ class DisplayReposRecyclerViewAdapter @Inject constructor() :
         mRepoDetailList = ArrayList(repoDetailList)
         mRepoDetailFullList = ArrayList(repoDetailList)
         notifyDataSetChanged()
+    }
+
+    fun setOnItemClickListener(onItemClick: (url: String, name: String, author: String) -> Unit) {
+        mOnItemClick = onItemClick
     }
 
     class DisplayReposViewHolder(val repoListItemBinding: RepoListItemBinding) :
