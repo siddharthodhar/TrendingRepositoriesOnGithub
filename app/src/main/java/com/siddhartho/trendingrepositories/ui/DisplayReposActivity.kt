@@ -3,6 +3,8 @@ package com.siddhartho.trendingrepositories.ui
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -47,6 +49,29 @@ class DisplayReposActivity : DaggerAppCompatActivity() {
         subscribeApiObserver()
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        Log.d(TAG, "onSaveInstanceState() called with: outState = $outState")
+        if (binding.searchViewRepos.query.isNotEmpty()) {
+            outState.putString(SEARCH_QUERY, binding.searchViewRepos.query.toString())
+        }
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        Log.d(TAG, "onRestoreInstanceState() called with: savedInstanceState = $savedInstanceState")
+        if (savedInstanceState.containsKey(SEARCH_QUERY)) {
+            Completable.timer(1, TimeUnit.SECONDS, Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    binding.searchViewRepos.setQuery(
+                        savedInstanceState.getString(SEARCH_QUERY),
+                        true
+                    )
+                }.let { disposable -> disposables.add(disposable) }
+        }
+    }
+
     private fun setUpToolbar() {
         Log.d(TAG, "setUpToolbar() called")
         setSupportActionBar(binding.toolbarDisplayRepos)
@@ -59,12 +84,31 @@ class DisplayReposActivity : DaggerAppCompatActivity() {
 
             setOnCloseListener {
                 binding.toolbarDisplayRepos.navigationIcon = null
-                if (isShown) {
+                if (!isIconified) {
                     onActionViewCollapsed()
                 }
 
                 return@setOnCloseListener true
             }
+
+            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    Log.d(TAG, "onQueryTextSubmit() called with: query = $query")
+                    displayReposRecyclerViewAdapter.filter.filter(query)
+                    (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager)
+                        .hideSoftInputFromWindow(binding.searchViewRepos.windowToken, 0)
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    Log.d(TAG, "onQueryTextChange() called with: newText = $newText")
+                    if (!isIconified) {
+                        binding.toolbarDisplayRepos.setNavigationIcon(R.drawable.ic_back_arrow)
+                    }
+                    displayReposRecyclerViewAdapter.filter.filter(newText)
+                    return true
+                }
+            })
         }
 
         binding.toolbarDisplayRepos.setNavigationOnClickListener {
@@ -237,7 +281,7 @@ class DisplayReposActivity : DaggerAppCompatActivity() {
 
         binding.apply {
             toolbarDisplayRepos.navigationIcon?.let {
-                if (searchViewRepos.isShown) {
+                if (!searchViewRepos.isIconified) {
                     toolbarDisplayRepos.navigationIcon = null
                     searchViewRepos.onActionViewCollapsed()
                     return
@@ -265,6 +309,7 @@ class DisplayReposActivity : DaggerAppCompatActivity() {
     companion object {
         private const val TAG = "DisplayReposActivity"
         private var isBackPressed = false
+        private const val SEARCH_QUERY = "search_query"
     }
 
 }
