@@ -3,7 +3,8 @@
     <string name="avatar">Avatar</string>
     <string name="language">Language</string>
     <string name="star">Star</string>
-    <string name="no_network_connection">No network connection</string>
     <string name="try_again">TRY AGAIN</string>
     <string name="tap_back_again">Tap back again to exit!</string>
+    <string name="something_wrong">Something went wrong while loading from internet!</string>
+    <string name="dash_divider">Dash Divider</string>
 </resources>

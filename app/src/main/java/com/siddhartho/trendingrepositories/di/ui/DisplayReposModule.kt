@@ -1,5 +1,6 @@
 package com.siddhartho.trendingrepositories.di.ui
 
+import com.siddhartho.trendingrepositories.local.TrendingRepoDao
 import com.siddhartho.trendingrepositories.local.TrendingRepoDatabase
 import com.siddhartho.trendingrepositories.network.TrendingRepoApi
 import com.siddhartho.trendingrepositories.viewmodel.TrendingRepoDataSource
@@ -16,12 +17,15 @@ class DisplayReposModule {
         @JvmStatic
         @ActivityScope
         @Provides
-        fun provideTrendingRepoDataSource(): TrendingRepoDataSource = TrendingRepoDataRepository()
+        fun provideTrendingRepoDataSource(
+            trendingRepoDao: TrendingRepoDao,
+            trendingRepoApi: TrendingRepoApi
+        ): TrendingRepoDataSource = TrendingRepoDataRepository(trendingRepoDao, trendingRepoApi)
 
         @JvmStatic
         @ActivityScope
         @Provides
-        fun provideTrendingRepoDao(trendingRepoDatabase: TrendingRepoDatabase) =
+        fun provideTrendingRepoDao(trendingRepoDatabase: TrendingRepoDatabase): TrendingRepoDao =
             trendingRepoDatabase.trendingRepoDao()
 
         @JvmStatic

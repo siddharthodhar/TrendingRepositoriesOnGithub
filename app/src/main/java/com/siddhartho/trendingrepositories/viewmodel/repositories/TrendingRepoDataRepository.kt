@@ -6,15 +6,12 @@ import com.siddhartho.trendingrepositories.network.TrendingRepoApi
 import com.siddhartho.trendingrepositories.viewmodel.TrendingRepoDataSource
 import io.reactivex.Completable
 import io.reactivex.Flowable
-import javax.inject.Inject
+import io.reactivex.Single
 
-class TrendingRepoDataRepository() : TrendingRepoDataSource {
-
-    @Inject
-    lateinit var trendingRepoDao: TrendingRepoDao
-
-    @Inject
-    lateinit var trendingRepoApi: TrendingRepoApi
+class TrendingRepoDataRepository(
+    private val trendingRepoDao: TrendingRepoDao,
+    private val trendingRepoApi: TrendingRepoApi
+) : TrendingRepoDataSource {
 
     override fun getReposFromApi(): Flowable<List<RepoDetail>> {
         return trendingRepoApi.getReposFromApi()
@@ -22,6 +19,10 @@ class TrendingRepoDataRepository() : TrendingRepoDataSource {
 
     override fun insertRepoDetails(repoDetails: List<RepoDetail>): Completable {
         return trendingRepoDao.insertRepoDetails(repoDetails)
+    }
+
+    override fun hasRepoDetails(): Single<Boolean> {
+        return trendingRepoDao.hasRepoDetails()
     }
 
     override fun clearAllRepos(): Completable {

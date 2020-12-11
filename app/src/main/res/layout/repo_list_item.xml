@@ -62,11 +62,11 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="14dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="12dp"
         android:contentDescription="@string/language"
         android:padding="4dp"
         android:src="@drawable/ic_language"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/imageViewDivider"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toStartOf="@id/textViewLanguage"
         app:layout_constraintStart_toStartOf="@id/textViewDescription"
@@ -86,7 +86,7 @@
         android:id="@+id/imageViewStars"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:contentDescription="@string/language"
+        android:contentDescription="@string/star"
         android:padding="2dp"
         android:src="@drawable/ic_stars"
         app:layout_constraintBottom_toBottomOf="@id/textViewLanguage"
@@ -104,5 +104,15 @@
         app:layout_constraintBottom_toBottomOf="@id/imageViewStars"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/imageViewStars" />
+
+    <ImageView
+        android:id="@+id/imageViewDivider"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:contentDescription="@string/dash_divider"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageViewLanguage" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

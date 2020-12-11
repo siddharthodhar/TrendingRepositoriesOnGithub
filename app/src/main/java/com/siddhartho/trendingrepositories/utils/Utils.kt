@@ -8,5 +8,5 @@ fun Context.showToast(messageRes: Int, duration: Int = Toast.LENGTH_SHORT) {
 }
 
 object Constants {
-    const val BASE_URL = "https://ghapi.huchen.dev/"
+    const val BASE_URL = "https://private-anon-c8edb5a5bd-githubtrendingapi.apiary-mock.com/"
 }
