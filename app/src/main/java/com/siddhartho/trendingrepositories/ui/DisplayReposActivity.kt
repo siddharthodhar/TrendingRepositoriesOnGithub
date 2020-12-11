@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.siddhartho.trendingrepositories.R
 import com.siddhartho.trendingrepositories.databinding.ActivityDisplayReposBinding
 import com.siddhartho.trendingrepositories.network.RepoResource
+import com.siddhartho.trendingrepositories.utils.CheckNetworkConnection
+import com.siddhartho.trendingrepositories.utils.NetworkConnection
 import com.siddhartho.trendingrepositories.utils.showToast
 import com.siddhartho.trendingrepositories.viewmodel.DisplayReposViewModel
 import com.siddhartho.trendingrepositories.viewmodel.TrendingRepoViewModelFactory
@@ -46,6 +48,8 @@ class DisplayReposActivity : DaggerAppCompatActivity() {
 
         displayReposViewModel = ViewModelProvider(this, trendingRepoViewModelFactory)
             .get(DisplayReposViewModel::class.java)
+
+        CheckNetworkConnection(applicationContext).registerNetworkCallback()
 
         subscribeLocalObserver()
 
@@ -188,7 +192,7 @@ class DisplayReposActivity : DaggerAppCompatActivity() {
                                     }
                                 }, { e ->
                                     Log.e(TAG, "subscribeApiObserver: ${e.message}", e)
-                                    showError("Something went wrong! (${e.message})")
+                                    showError("${getString(R.string.something_wrong)} (${e.message})")
                                 })?.let { disposable ->
                                     disposableLoading = disposable
                                     disposables.add(disposable)
@@ -206,13 +210,17 @@ class DisplayReposActivity : DaggerAppCompatActivity() {
                                 ?.observeOn(AndroidSchedulers.mainThread())
                                 ?.subscribe({ hasRepos ->
                                     if (!hasRepos) {
-                                        showError("Something went wrong! (${listRepoResource.message})")
-                                    } else {
-                                        showToast(R.string.something_wrong)
+                                        if (NetworkConnection.isConnected) {
+                                            showError("${getString(R.string.something_wrong)} (${listRepoResource.message})")
+                                        } else {
+                                            showError(getString(R.string.no_network))
+                                        }
+                                    } else if (NetworkConnection.isNotConnected) {
+                                        showToast(R.string.no_network)
                                     }
                                 }, { e ->
                                     Log.e(TAG, "subscribeApiObserver: ${e.message}", e)
-                                    showError("Something went wrong! (${e.message})")
+                                    showError("${getString(R.string.something_wrong)} (${e.message})")
                                 })?.let { disposable -> disposables.add(disposable) }
 
                             if (binding.swipeRefreshRepos.isVisible && binding.swipeRefreshRepos.isRefreshing) {
